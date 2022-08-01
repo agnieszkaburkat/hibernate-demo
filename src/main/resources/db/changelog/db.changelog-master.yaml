@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - logicalFilePath: path-independent
+  - property:
+      name: include.isRelative
+      value: true
+  - includeAll:
+      path: db/migrations/
+      relativeToChangelogFile: false
