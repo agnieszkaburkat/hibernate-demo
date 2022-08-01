@@ -72,7 +72,7 @@ public class ProductController {
         persistenceService.saveAll(productData);
         watch.stop();
 
-        watch.start("CRUD Hibernate saveAll()");
+        watch.start("UUID Hibernate saveAll()");
         ProductCategoryWithUUID categoryWithUUID = ProductCategoryWithUUID.builder().name("sci-fi save all uuid").build();
         List<ProductWithUUID> productDataWithUUID = ProductUuidDataBuilder
                 .builder()
