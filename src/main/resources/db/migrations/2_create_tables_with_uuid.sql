@@ -1,11 +1,9 @@
 --liquibase formatted sql
 --changeset agnieszka.burkat:create_tables_with_uuid logicalFilePath:path-independent
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-SELECT uuid_generate_v4();
 
 CREATE TABLE product_uuid
 (
-    id uuid DEFAULT uuid_generate_v4(),
+    id uuid ,
     title character varying(50)  NOT NULL,
     stock character varying(255) NOT NULL,
     price int                    NOT NULL
@@ -13,7 +11,7 @@ CREATE TABLE product_uuid
 
 CREATE TABLE product_category_uuid
 (
-    id uuid DEFAULT uuid_generate_v4(),
+    id uuid,
     name character varying(50)  NOT NULL
 );
 

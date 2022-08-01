@@ -26,8 +26,7 @@ import java.util.UUID;
 public class ProductCategoryWithUUID {
     @Id
     @GeneratedValue
-    private UUID courseId;
-
+    private UUID id;
     private String name;
 
 }
