@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/test_db?currentSchema=public,reWriteBatchedInserts=true
+    url: jdbc:postgresql://localhost:5432/test_db?currentSchema=public,reWriteBatchedInserts=true,profileSQL=true
     username: postgres
     password: root
     hikari:

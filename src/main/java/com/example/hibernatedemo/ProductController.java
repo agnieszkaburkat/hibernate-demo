@@ -1,5 +1,6 @@
 package com.example.hibernatedemo;
 
+import com.example.hibernatedemo.entities.Department;
 import com.example.hibernatedemo.entities.Product;
 import com.example.hibernatedemo.entities.ProductCategory;
 import com.example.hibernatedemo.entities.ProductCategoryWithUUID;
@@ -10,6 +11,7 @@ import com.example.hibernatedemo.utils.ProductUuidDataBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,12 +31,14 @@ public class ProductController {
     private static final int ENTITIES_SIZE = 10_000;
 
     @GetMapping(path = "/exception")
-    public void saveAllProductsWithExceptionThrown() {
+    public ResponseEntity saveAllProductsWithExceptionThrown() {
         tryToPersistData();
         long categoriesSize = persistenceService.countAllCategories();
         assert categoriesSize == 0L;
         long productsSize = persistenceService.countAllProducts();
         assert productsSize == 0L;
+        return ResponseEntity.ok().build();
+
     }
 
     private void tryToPersistData() {
@@ -58,7 +62,7 @@ public class ProductController {
     }
 
     @GetMapping(path = "/compare")
-    public void saveAllProductsComparingHibernateAndJdbc() {
+    public ResponseEntity saveAllProductsComparingHibernateAndJdbc() {
         StopWatch watch = new StopWatch();
 
         watch.start("Hibernate saveAll()");
@@ -105,7 +109,28 @@ public class ProductController {
         watch.stop();
 
         log.info(productData.size() + " data inserted, duration in second " + watch.prettyPrint());
+        return ResponseEntity.ok().build();
 
+    }
+
+    @GetMapping(path = "/relations")
+    public ResponseEntity saveAllRelations() {
+        StopWatch watch = new StopWatch();
+
+        List<ProductCategoryWithUUID> categories = ProductUuidDataBuilder
+                .builder().setTotal(ENTITIES_SIZE).buildCategory();
+        Department department = Department.builder()
+                .productCategories(categories)
+                .name("test")
+                .build();
+
+        watch.start("UUID Hibernate saveAll() with relation OneToMany");
+        persistenceService.saveAllDepartment(department);
+        watch.stop();
+
+        log.info(" data inserted, duration in second " + watch.prettyPrint());
+
+        return ResponseEntity.ok().build();
     }
 
 

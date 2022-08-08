@@ -42,7 +42,7 @@ public class ProductUuidDataBuilder {
     public List<ProductCategoryWithUUID> buildCategory() {
         return IntStream.range(0, total)
                 .mapToObj(val -> ProductCategoryWithUUID.builder()
-                        .name("Product " + val)
+                        .name("Category " + val)
                         .build()
                 ).collect(Collectors.toList());
     }

@@ -1,6 +1,7 @@
 --liquibase formatted sql
 --changeset agnieszka.burkat:create_tables logicalFilePath:path-independent
 
+DROP TABLE IF EXISTS product;
 CREATE TABLE product
 (
     id    serial                 NOT NULL
@@ -9,6 +10,8 @@ CREATE TABLE product
     stock character varying(255) NOT NULL,
     price int                    NOT NULL
 );
+
+DROP TABLE IF EXISTS product_category;
 CREATE TABLE product_category
 (
     id    serial                 NOT NULL

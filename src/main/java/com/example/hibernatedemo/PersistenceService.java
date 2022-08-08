@@ -1,8 +1,10 @@
 package com.example.hibernatedemo;
 
+import com.example.hibernatedemo.entities.Department;
 import com.example.hibernatedemo.entities.Product;
 import com.example.hibernatedemo.entities.ProductCategory;
 import com.example.hibernatedemo.entities.ProductWithUUID;
+import com.example.hibernatedemo.repository.DepartmentRepository;
 import com.example.hibernatedemo.repository.ProductCategoryRepository;
 import com.example.hibernatedemo.repository.ProductRepository;
 import com.example.hibernatedemo.repository.ProductWithUUIDRepository;
@@ -31,6 +33,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PersistenceService {
 
+    private final DepartmentRepository departmentRepository;
     private final ProductRepository productRepository;
     private final ProductWithUUIDRepository productWithUUIDRepository;
     private final ProductCategoryRepository categoryRepository;
@@ -43,6 +46,12 @@ public class PersistenceService {
     public void saveAll(List<Product> productData) {
         log.info("insert using saveAll");
         productRepository.saveAll(productData);
+    }
+
+    @Transactional
+    public void saveAllDepartment(Department department) {
+        log.info("insert using saveAll");
+        departmentRepository.save(department);
     }
 
     @Transactional
